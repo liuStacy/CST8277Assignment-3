@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 输入区域 -->
+    <ScrollView
+        android:id="@+id/inputScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/editItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Item name"
+                android:inputType="text"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/editItemBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Brand"
+                android:inputType="text"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/editItemPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Price"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/editItemQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Quantity"
+                android:inputType="number"
+                android:layout_marginBottom="16dp"/>
+
+            <Button
+                android:id="@+id/buttonAddItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Item"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 列表分隔线 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDD"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- 商品列表 -->
+    <ListView
+        android:id="@+id/listViewItems"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="#EEE"
+        android:dividerHeight="1dp"/>
+
+</LinearLayout>

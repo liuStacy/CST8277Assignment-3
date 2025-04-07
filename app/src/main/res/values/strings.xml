@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GroceryList</string>
+    <string name="login">Login</string>
+    <string name="add_item">Add Item</string>
+    <string name="list_management">List Management</string>
+    <string name="shopping_mode">Shopping Mode</string>
+    <string name="settings">Settings</string>
+    <string name="theme_settings">Theme Settings</string>
+    <string name="light_theme">Light Theme</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="enable_notifications">Enable Notifications?</string>
+    <string name="spending_tracker">Spending Tracker</string>
+    <string name="spending_tracker_on">On</string>
+    <string name="spending_tracker_off">Off</string>
+    <string name="save_settings">Save Settings</string>
+
+    <!-- ListManagementActivity 相关 -->
+    <string name="enter_list_name">Enter new list name</string>
+    <string name="add_list">Add List</string>
+    <string name="edit_list">Edit List</string>
+    <string name="delete_list">Delete List</string>
+    <string name="update_list_success">List updated successfully</string>
+
+    <!-- ListDetailActivity 相关 -->
+    <string name="list_detail">List Detail</string>
+    <string name="enter_item_name">Enter item name</string>
+    <string name="add_item_to_list">Add Item</string>
+    <string name="edit_item">Edit Item</string>
+    <string name="delete_item">Delete Item</string>
+    <string name="no_items_found">No items found in this list</string>
+
+    <!-- Confirmation dialogs -->
+    <string name="confirm_delete">Are you sure you want to delete?</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+</resources>

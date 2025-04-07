@@ -1,0 +1,90 @@
+## Database Schema** (SQL snippet)
+PRAGMA foreign_keys = ON;
+
+-- Users table: stores basic user info.
+CREATE TABLE IF NOT EXISTS users (
+    userID INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    name TEXT NOT NULL,
+    preferences TEXT
+);
+
+-- Categories table: holds predefined or user-defined item categories.
+CREATE TABLE IF NOT EXISTS categories (
+    categoryID INTEGER PRIMARY KEY AUTOINCREMENT,
+    categoryName TEXT UNIQUE NOT NULL
+);
+
+-- Grocery lists table: a user’s collection of lists.
+CREATE TABLE IF NOT EXISTS grocery_lists (
+    listID INTEGER PRIMARY KEY AUTOINCREMENT,
+    userID INTEGER NOT NULL,
+    listName TEXT NOT NULL,
+    creationDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userID) REFERENCES users(userID) ON DELETE CASCADE
+);
+
+-- Items table: individual items in a grocery list.
+CREATE TABLE IF NOT EXISTS items (
+    itemID INTEGER PRIMARY KEY AUTOINCREMENT,
+    listID INTEGER NOT NULL,
+    categoryID INTEGER NOT NULL,
+    itemName TEXT NOT NULL,
+    quantity INTEGER DEFAULT 1,
+    brand TEXT,
+    price REAL,
+    purchased INTEGER DEFAULT 0,  -- using 0 (false) and 1 (true)
+    FOREIGN KEY (listID) REFERENCES grocery_lists(listID) ON DELETE CASCADE,
+    FOREIGN KEY (categoryID) REFERENCES categories(categoryID)
+);
+
+-- Notifications table: stores messages for users.
+CREATE TABLE IF NOT EXISTS notifications (
+    notificationID INTEGER PRIMARY KEY AUTOINCREMENT,
+    userID INTEGER NOT NULL,
+    message TEXT NOT NULL,
+    dateTime DATETIME NOT NULL,
+    FOREIGN KEY (userID) REFERENCES users(userID) ON DELETE CASCADE
+);
+
+-- Budget history table: records expense entries.
+CREATE TABLE IF NOT EXISTS budget_history (
+    entryID INTEGER PRIMARY KEY AUTOINCREMENT,
+    userID INTEGER NOT NULL,
+    amount REAL NOT NULL,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userID) REFERENCES users(userID) ON DELETE CASCADE
+);
+
+-- Indexes for performance on foreign key columns.
+CREATE INDEX IF NOT EXISTS idx_list_user ON grocery_lists(userID);
+CREATE INDEX IF NOT EXISTS idx_items_list ON items(listID);
+CREATE INDEX IF NOT EXISTS idx_items_category ON items(categoryID);
+
+-- Prepopulate the categories table with default values.
+INSERT OR IGNORE INTO categories (categoryName) VALUES
+    ('Uncategorized'),
+    ('Produce'),
+    ('Dairy'),
+    ('Meat'),
+    ('Bakery'),
+    ('Frozen Foods'),
+    ('Canned Goods'),
+    ('Beverages'),
+    ('Snacks'),
+    ('Household');
+
+-- Trigger: update the grocery list's updatedDate whenever items change.
+CREATE TRIGGER IF NOT EXISTS update_list_timestamp
+AFTER INSERT OR UPDATE OR DELETE ON items
+FOR EACH ROW
+BEGIN
+    UPDATE grocery_lists
+    SET updatedDate = CURRENT_TIMESTAMP
+    WHERE listID = CASE
+                     WHEN NEW.listID IS NOT NULL THEN NEW.listID
+                     ELSE OLD.listID
+                   END;
+END;
